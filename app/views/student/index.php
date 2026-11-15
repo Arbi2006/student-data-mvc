@@ -1,25 +1,23 @@
 <?php
-
 declare(strict_types=1);
 ?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Student Data</title>
+    <title>Data Mahasiswa</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 24px; }
-        table { border-collapse: collapse; width: 100%; margin-top: 12px; }
-        th, td { border: 1px solid #888; padding: 8px; text-align: left; }
-        th { background: #efefef; }
-        .btn { display: inline-block; padding: 5px 10px; border: 1px solid #555; text-decoration: none; color: #111; background: #f7f7f7; cursor: pointer; }
-        .btn-del { background: #ffe0e0; border-color: #b00; color: #900; }
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        table { border-collapse: collapse; width: 100%; margin-top: 10px; }
+        th, td { border: 1px solid #999; padding: 7px; text-align: left; }
+        th { background: #eee; }
+        .btn { padding: 4px 8px; border: 1px solid #666; text-decoration: none; color: #000; background: #f5f5f5; }
+        .btn-hapus { background: #fdd; border-color: #a00; color: #900; }
     </style>
 </head>
 <body>
-    <h2>Daftar Student Data</h2>
-    <a href="<?= htmlspecialchars($baseUrl, ENT_QUOTES, 'UTF-8') ?>/students/create" class="btn">+ Tambah Mahasiswa</a>
-
+    <h2>Data Mahasiswa</h2>
+    <a href="<?= $this->e($baseUrl) ?>/students/create" class="btn">+ Tambah Mahasiswa</a>
     <table>
         <thead>
             <tr>
@@ -35,22 +33,22 @@ declare(strict_types=1);
         <tbody>
         <?php if (empty($students)): ?>
             <tr>
-                <td colspan="7">Belum ada data mahasiwa.</td>
+                <td colspan="7">Data masih kosong.</td>
             </tr>
         <?php else: ?>
-            <?php foreach ($students as $idx => $row): ?>
+            <?php foreach ($students as $i => $mhs): ?>
                 <tr>
-                    <td><?= $idx + 1 ?></td>
-                    <td><?= htmlspecialchars((string) $row['nim'], ENT_QUOTES, 'UTF-8') ?></td>
-                    <td><?= htmlspecialchars((string) $row['name'], ENT_QUOTES, 'UTF-8') ?></td>
-                    <td><?= htmlspecialchars((string) $row['major'], ENT_QUOTES, 'UTF-8') ?></td>
-                    <td><?= htmlspecialchars((string) $row['semester'], ENT_QUOTES, 'UTF-8') ?></td>
-                    <td><?= htmlspecialchars(number_format((float) $row['gpa'], 2, '.', ''), ENT_QUOTES, 'UTF-8') ?></td>
+                    <td><?= $i + 1 ?></td>
+                    <td><?= $this->e($mhs['nim']) ?></td>
+                    <td><?= $this->e($mhs['name']) ?></td>
+                    <td><?= $this->e($mhs['major']) ?></td>
+                    <td><?= $this->e($mhs['semester']) ?></td>
+                    <td><?= $this->e(number_format((float) $mhs['gpa'], 2, '.', '')) ?></td>
                     <td>
-                        <a href="<?= htmlspecialchars($baseUrl, ENT_QUOTES, 'UTF-8') ?>/students/edit?id=<?= htmlspecialchars((string) $row['id'], ENT_QUOTES, 'UTF-8') ?>" class="btn">Ubah</a>
-                        <form action="<?= htmlspecialchars($baseUrl, ENT_QUOTES, 'UTF-8') ?>/students/delete" method="POST" style="display:inline;" onsubmit="return confirm('Yakin mau hapus data ini?');">
-                            <input type="hidden" name="id" value="<?= htmlspecialchars((string) $row['id'], ENT_QUOTES, 'UTF-8') ?>">
-                            <button type="submit" class="btn btn-del">Hapus</button>
+                        <a href="<?= $this->e($baseUrl) ?>/students/edit?id=<?= $this->e($mhs['id']) ?>" class="btn">Ubah</a>
+                        <form action="<?= $this->e($baseUrl) ?>/students/delete" method="POST" style="display:inline;" onsubmit="return confirm('Yakin hapus data ini?');">
+                            <input type="hidden" name="id" value="<?= $this->e($mhs['id']) ?>">
+                            <button type="submit" class="btn btn-hapus">Hapus</button>
                         </form>
                     </td>
                 </tr>

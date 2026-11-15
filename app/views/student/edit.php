@@ -1,8 +1,6 @@
 <?php
-
 declare(strict_types=1);
-
-$idMhs = $old['id'] ?? ($student['id'] ?? '');
+$idData = $old['id'] ?? ($student['id'] ?? '');
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -10,50 +8,48 @@ $idMhs = $old['id'] ?? ($student['id'] ?? '');
     <meta charset="UTF-8">
     <title>Ubah Mahasiswa</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 24px; }
-        .box { margin-bottom: 10px; }
-        label { display: block; margin-bottom: 4px; }
-        input { padding: 6px; width: 280px; }
-        .err { background: #ffe5e5; border: 1px solid #c00; color: #900; padding: 8px 14px; margin-bottom: 12px; width: 320px; }
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .field { margin-bottom: 10px; }
+        label { display: block; margin-bottom: 3px; }
+        input { padding: 5px; width: 260px; }
+        .error-box { background: #fee; border: 1px solid #c00; color: #900; padding: 8px 12px; margin-bottom: 12px; width: 300px; }
     </style>
 </head>
 <body>
-    <h2>Ubah Data Mahasiswa</h2>
-
+    <h2>Ubah Mahasiswa</h2>
     <?php if (!empty($errors)): ?>
-        <div class="err">
+        <div class="error-box">
             <ul>
             <?php foreach ($errors as $err): ?>
-                <li><?= htmlspecialchars((string) $err, ENT_QUOTES, 'UTF-8') ?></li>
+                <li><?= $this->e($err) ?></li>
             <?php endforeach; ?>
             </ul>
         </div>
     <?php endif; ?>
-
-    <form action="<?= htmlspecialchars($baseUrl, ENT_QUOTES, 'UTF-8') ?>/students/update" method="POST">
-        <input type="hidden" name="id" value="<?= htmlspecialchars((string) $idMhs, ENT_QUOTES, 'UTF-8') ?>">
-        <div class="box">
+    <form action="<?= $this->e($baseUrl) ?>/students/update" method="POST">
+        <input type="hidden" name="id" value="<?= $this->e($idData) ?>">
+        <div class="field">
             <label>NIM</label>
-            <input type="text" name="nim" value="<?= htmlspecialchars((string) ($old['nim'] ?? ''), ENT_QUOTES, 'UTF-8') ?>">
+            <input type="text" name="nim" value="<?= $this->e($old['nim'] ?? '') ?>">
         </div>
-        <div class="box">
+        <div class="field">
             <label>Nama</label>
-            <input type="text" name="name" value="<?= htmlspecialchars((string) ($old['name'] ?? ''), ENT_QUOTES, 'UTF-8') ?>">
+            <input type="text" name="name" value="<?= $this->e($old['name'] ?? '') ?>">
         </div>
-        <div class="box">
+        <div class="field">
             <label>Jurusan</label>
-            <input type="text" name="major" value="<?= htmlspecialchars((string) ($old['major'] ?? ''), ENT_QUOTES, 'UTF-8') ?>">
+            <input type="text" name="major" value="<?= $this->e($old['major'] ?? '') ?>">
         </div>
-        <div class="box">
+        <div class="field">
             <label>Semester (1-14)</label>
-            <input type="number" name="semester" value="<?= htmlspecialchars((string) ($old['semester'] ?? ''), ENT_QUOTES, 'UTF-8') ?>">
+            <input type="number" name="semester" value="<?= $this->e($old['semester'] ?? '') ?>">
         </div>
-        <div class="box">
+        <div class="field">
             <label>GPA (0.00-4.00)</label>
-            <input type="text" name="gpa" value="<?= htmlspecialchars((string) ($old['gpa'] ?? ''), ENT_QUOTES, 'UTF-8') ?>">
+            <input type="text" name="gpa" value="<?= $this->e($old['gpa'] ?? '') ?>">
         </div>
-        <button type="submit">Simpan Perubahan</button>
-        <a href="<?= htmlspecialchars($baseUrl, ENT_QUOTES, 'UTF-8') ?>/students">Kembali</a>
+        <button type="submit">Update</button>
+        <a href="<?= $this->e($baseUrl) ?>/students">Batal</a>
     </form>
 </body>
 </html>
